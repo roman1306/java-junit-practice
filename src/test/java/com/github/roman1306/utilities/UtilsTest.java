@@ -16,24 +16,37 @@ class UtilsTest {
     }
 
     @Test
-    void testConcatenateWords() {
-        assertEquals("Hello world!", utils.concatenateWords("Hello", "world!"));
+    void testConcatenateWordsCheckNoNull() {
+        assertNotNull(utils.concatenateWords("Hello", "world!"));
     }
 
     @Test
-    void testConcatenateWordsNonLatin() {
-        assertTrue(utils.concatenateWords("", "").matches("^[^a-zA-Z0-9]+$"));
+    void testConcatenateWordsCheckNull() {
+        assertNull(utils.concatenateWords(null, null));
+    }
+
+    @Test
+    void testConcatenateWordsCheckEmptyString() {
+        assertTrue(utils.concatenateWords("", "").trim().isEmpty());
+    }
+
+    @Test
+    void testConcatenateWordsCheckNoEmptyString() {
+        assertFalse(utils.concatenateWords("Hello", "world!").isEmpty());
+    }
+
+    @Test
+    void testConcatenateWordsCheckNonLatin() {
+        assertFalse(utils.concatenateWords("Привет", "мир").matches("^[a-zA-Z\\s]+$"));
     }
 
     @Test
     @Disabled
     @Timeout(4)
-    void testConcatenateWordsWithTimeout() {
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    void testConcatenateWordsWithTimeout() throws InterruptedException {
+
+        TimeUnit.SECONDS.sleep(5);
+
         assertNotEquals(0, utils.computeFactorial(new Random().nextInt(5)));
     }
 

@@ -3,7 +3,9 @@ package com.github.roman1306.utilities;
 public class Utils {
 
     public String concatenateWords(String prevWord, String nextWord) {
-
+        if (prevWord == null && nextWord == null) {
+            return null;
+        }
         return prevWord + " " + nextWord;
     }
 
